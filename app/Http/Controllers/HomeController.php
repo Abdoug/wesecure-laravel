@@ -6,6 +6,7 @@ use App\Message;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Pusher\Pusher;
 
 class HomeController extends Controller
 {
@@ -61,5 +62,20 @@ class HomeController extends Controller
         $new_message->is_read = $is_read;
 
         $new_message->save();
+
+        $options = array(
+            'cluster' => 'eu',
+            'useTls' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = ['from' => $from, 'to' => $to];
+        $pusher->trigger('my-channel', 'my-event', $data);
     }
 }

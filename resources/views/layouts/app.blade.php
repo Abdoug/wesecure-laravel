@@ -222,6 +222,7 @@
     </div>
 </body>
 
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
@@ -234,6 +235,19 @@
             headers: {
                 'X-CSRF-TOKEN': $(`meta[name="csrf-token"]`).attr('content')
             }
+        });
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('2532ad846e7fe0f35d0b', {
+            cluster: 'eu',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            alert(JSON.stringify(data));
         });
 
         $('.user').on('click', function() {

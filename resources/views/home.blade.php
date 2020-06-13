@@ -10,7 +10,7 @@
                     <li class="user" id="{{ $user->id }}">
 
                         @if ( $user->unread )
-                            <span class="pending">{{ $user->unread  }}</span>
+                        <span class="pending">{{ $user->unread }}</span>
                         @endif
 
                         <div class="media">

@@ -30,9 +30,9 @@ class HomeController extends Controller
     {
 
         // Select all users except the logged in
-        //$users = User::where('id', '!=', Auth::id())->get();
-        $users = DB::Select("select users.id, users.name, users.avatar, users.email, count(is_read) as unread from users
-                                    LEFT JOIN messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . " where users.id != " . Auth::id() . " group by users.id, users.name, users.avatar, users.email");
+        $users = DB::select("select users.id, users.name, users.avatar, users.email, count(is_read) AS unread FROM users LEFT JOIN messages
+        ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . " WHERE users.id != " . Auth::id() . " GROUP BY
+        users.id, users.name, users.avatar, users.email");
 
         return view('home', compact('users'));
     }
@@ -41,6 +41,9 @@ class HomeController extends Controller
     {
 
         $current_user = Auth::id();
+
+        Message::where(['from' => $user_id, 'to' => $current_user])->update(['is_read' => 1]);
+
         // Get the messages where from === Auth::id() && to === $user_id OR from === $user_id && to === Auth::id()
         $messages = Message::where(function ($query) use ($current_user, $user_id) {
             $query->where('from', $current_user)->where('to', $user_id);

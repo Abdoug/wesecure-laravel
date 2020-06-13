@@ -238,7 +238,7 @@
         });
 
         // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        //Pusher.logToConsole = true;
 
         var pusher = new Pusher('2532ad846e7fe0f35d0b', {
             cluster: 'eu',
@@ -247,23 +247,22 @@
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            console.log("D", data);
-            if ( my_id == data.from ) {
-                alert("Sender");
-            }
-            else if ( my_id == data.to ) {
-                if ( data.from == receiver_id ) {
-                    $("#" + data.from).click();
-                }
-                else {
-                    let pending = parseInt($("#" + data.from).find(".pending").html());
+            if (my_id == data.from) {
+                $('#' + data.to).click();
+            } else if (my_id == data.to) {
 
-                    if ( pending ) {
-                        $("#" + data.from).find(".pending").html(pending + 1);
+                if (receiver_id == data.from) {
+                    $('#' + data.from).click();
+                } else {
+
+                    var pending = parseInt($('#' + data.from).find('.pending').html());
+
+                    if (pending) {
+                        $('#' + data.from).find('.pending').html(pending + 1);
+                    } else {
+                        $('#' + data.from).append("<span class='pending'>1</span>");
                     }
-                    else {
-                        $("#" + data.from).find(".pending").html("<span class='pending'>1</span>");
-                    }
+
                 }
             }
         });
@@ -271,7 +270,7 @@
         $('.user').on('click', function() {
             $('.user').removeClass('active');
             $(this).addClass('active');
-
+            $(this).find('.pending').remove();
             receiver_id = $(this).attr('id');
             $.ajax({
                 method: 'get',
@@ -280,6 +279,7 @@
                 cache: false,
                 success: function(data) {
                     $('#messages').html(data);
+                    scroller();
                 }
             })
         });
@@ -306,13 +306,19 @@
 
                     },
                     complete: () => {
-
+                        scroller();
                     }
                 })
 
             }
 
         });
+
+        function scroller() {
+            $('.message-wrapper').animate({
+                scrollTop: $('.message-wrapper').get(0).scrollHeight
+            }, 50);
+        }
     });
 </script>
 

@@ -161,13 +161,14 @@
             border: 1px solid #aaaaaa;
         }
     </style>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md shadow-sm navbar-app">
+            <div class="container mr-0 container-app">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -182,14 +183,14 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto link-app">
                         <!-- Authentication Links -->
                         @guest
-                        <li class="nav-item">
+                        <li class="nav-item pl-4">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
-                        <li class="nav-item">
+                        <li class="nav-item pl-4">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                         @endif

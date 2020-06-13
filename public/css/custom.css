@@ -1,0 +1,66 @@
+:root {
+    --text-color-1: #e0d5ef;
+    --background-color-1: #754aab;
+    --bakcground-color-2: #754aab2b;
+    --text-hover-1: #d3b2ff;
+    --text-hover-2: #754aaba3;
+    --font-family-1: fantasy;
+    --border-color-1: #754aab;
+    --border-radius: 0.2rem;
+}
+
+body {
+    background-color: var(--bakcground-color-2);
+}
+
+.navbar-link {
+    position: absolute;
+    background-color: var(--background-color-1);
+    padding: 1rem;
+    text-align: right;
+    top: 0;
+    width: 100%;
+}
+
+.navbar-link > a, .container-app > a, .link-app > li > a {
+    color: var(--text-color-1);
+    font-family: var(--font-family-1);
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.navbar-link > a:hover, .container-app > a:hover, .link-app > li > a:hover {
+    color: var(--text-hover-1);
+}
+
+.home-title {
+    color: var(--background-color-1);
+    font-family: var(--font-family-1);
+}
+
+.home-content {
+    max-width: 40rem;
+    padding: 0 2rem 0 2rem;
+    color: var(--background-color-1);
+    font-family: var(--font-family-1);
+}
+
+.home-button {
+    background-color: transparent;
+    border: 0.5px solid var(--border-color-1);
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.7rem;
+    color: var(--background-color-1);
+    outline: none;
+    font-family: var(--font-family-1);
+}
+
+.home-button:hover {
+    border: 1px solid var(--text-hover-2);
+    color: var(--text-hover-2);
+}
+
+.navbar-app {
+    background-color: var(--background-color-1);
+}

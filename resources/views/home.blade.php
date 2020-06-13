@@ -8,7 +8,10 @@
                 <ul class="users">
                     @foreach ( $users as $user )
                     <li class="user" id="{{ $user->id }}">
-                        <span class="pending"></span>
+
+                        @if ( $user->unread )
+                            <span class="pending">{{ $user->unread  }}</span>
+                        @endif
 
                         <div class="media">
                             <div class="media-left">

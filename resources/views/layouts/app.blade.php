@@ -247,7 +247,25 @@
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
+            console.log("D", data);
+            if ( my_id == data.from ) {
+                alert("Sender");
+            }
+            else if ( my_id == data.to ) {
+                if ( data.from == receiver_id ) {
+                    $("#" + data.from).click();
+                }
+                else {
+                    let pending = parseInt($("#" + data.from).find(".pending").html());
+
+                    if ( pending ) {
+                        $("#" + data.from).find(".pending").html(pending + 1);
+                    }
+                    else {
+                        $("#" + data.from).find(".pending").html("<span class='pending'>1</span>");
+                    }
+                }
+            }
         });
 
         $('.user').on('click', function() {

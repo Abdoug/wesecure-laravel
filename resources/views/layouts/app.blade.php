@@ -250,10 +250,8 @@
         channel.bind('my-event', function(data) {
             data = data.message;
             if (my_id == data.from) {
-                console.log("Hey1");
                 $('#' + data.to).click();
             } else if (my_id == data.to) {
-                console.log("Hey2");
                 if (receiver_id == data.from) {
                     $('#' + data.from).click();
                 } else {

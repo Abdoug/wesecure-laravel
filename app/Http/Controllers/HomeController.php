@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
+use App\Events\MyEvent;
 
 class HomeController extends Controller
 {
@@ -81,7 +82,13 @@ class HomeController extends Controller
             $options
         );
 
-        $data = ['from' => $from, 'to' => $to];
-        $pusher->trigger('my-channel', 'my-event', $data);
+        try {
+            $data = ['from' => $from, 'to' => $to];
+            event(new MyEvent($data));
+            //$pusher->trigger('my-channel', 'my-event', $data);
+        }
+        catch (\Exception $e) {
+            dd($e);
+        }
     }
 }

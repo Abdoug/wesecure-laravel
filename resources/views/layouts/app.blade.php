@@ -223,7 +223,7 @@
     </div>
 </body>
 
-<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
@@ -241,17 +241,19 @@
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
 
-        var pusher = new Pusher('2532ad846e7fe0f35d0b', {
+        var pusher = new Pusher('3f6a80d2b3906fac1080', {
             cluster: 'eu',
             forceTLS: true
         });
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
+            data = data.message;
             if (my_id == data.from) {
+                console.log("Hey1");
                 $('#' + data.to).click();
             } else if (my_id == data.to) {
-
+                console.log("Hey2");
                 if (receiver_id == data.from) {
                     $('#' + data.from).click();
                 } else {

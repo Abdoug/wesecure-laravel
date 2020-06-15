@@ -258,7 +258,7 @@ module.exports = function xhrAdapter(config) {
       request.addEventListener('progress', config.onDownloadProgress);
     }
 
-    // Not all browsers support upload events
+    // Not all browsers support upload Events
     if (typeof config.onUploadProgress === 'function' && request.upload) {
       request.upload.addEventListener('progress', config.onUploadProgress);
     }
@@ -2576,7 +2576,7 @@ __webpack_require__.r(__webpack_exports__);
 
   var ARROW_RIGHT_KEYCODE = 39; // KeyboardEvent.which value for right arrow key
 
-  var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
+  var TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat Events to fire after touch
 
   var SWIPE_THRESHOLD = 40;
   var Default = {
@@ -2845,12 +2845,12 @@ __webpack_require__.r(__webpack_exports__);
 
         if (_this3._config.pause === 'hover') {
           // If it's a touch-enabled device, mouseenter/leave are fired as
-          // part of the mouse compatibility events on first tap - the carousel
+          // part of the mouse compatibility Events on first tap - the carousel
           // would stop cycling until user tapped out of it;
           // here, we listen for touchend, explicitly pause the carousel
           // (as if it's the second time we tap on it, mouseenter compat event
           // is NOT fired) and after a timeout (to allow for mouse compatibility
-          // events to fire) we explicitly restart cycling
+          // Events to fire) we explicitly restart cycling
           _this3.pause();
 
           if (_this3.touchTimeout) {
@@ -4232,7 +4232,7 @@ __webpack_require__.r(__webpack_exports__);
         return $(htmlElement).off(EVENT_KEY$5);
       });
       /**
-       * `document` has 2 events `Event.FOCUSIN` and `Event.CLICK_DATA_API`
+       * `document` has 2 Events `Event.FOCUSIN` and `Event.CLICK_DATA_API`
        * Do not move `document` in `htmlElements` array
        * It will remove `Event.CLICK_DATA_API` event that should remain
        */
@@ -5573,7 +5573,7 @@ __webpack_require__.r(__webpack_exports__);
     };
 
     _proto.setContent = function setContent() {
-      var $tip = $(this.getTipElement()); // We use append for html objects to maintain js events
+      var $tip = $(this.getTipElement()); // We use append for html objects to maintain js Events
 
       this.setElementContent($tip.find(Selector$7.TITLE), this.getTitle());
 
@@ -10310,7 +10310,7 @@ jQuery.Deferred.exceptionHook = function( error, stack ) {
 	// Support: IE 8 - 9 only
 	// Console exists when dev tools are open, which can happen at any time
 	if ( window.console && window.console.warn && error && rerrorNames.test( error.name ) ) {
-		window.console.warn( "jQuery.Deferred exception: " + error.message, error.stack, stack );
+		window.console.warn( "jQuery.Deferred exception: " + error.Message, error.stack, stack );
 	}
 };
 
@@ -11466,7 +11466,7 @@ function on( elem, types, selector, data, fn, one ) {
 }
 
 /*
- * Helper functions for managing events -- not part of the public interface.
+ * Helper functions for managing Events -- not part of the public interface.
  * Props to Dean Edwards' addEvent library for many of the ideas.
  */
 jQuery.event = {
@@ -11480,7 +11480,7 @@ jQuery.event = {
 			special, handlers, type, namespaces, origType,
 			elemData = dataPriv.get( elem );
 
-		// Don't attach events to noData or text/comment nodes (but allow plain objects)
+		// Don't attach Events to noData or text/comment nodes (but allow plain objects)
 		if ( !elemData ) {
 			return;
 		}
@@ -11517,7 +11517,7 @@ jQuery.event = {
 			};
 		}
 
-		// Handle multiple events separated by a space
+		// Handle multiple Events separated by a space
 		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
 		t = types.length;
 		while ( t-- ) {
@@ -11556,7 +11556,7 @@ jQuery.event = {
 				handlers = events[ type ] = [];
 				handlers.delegateCount = 0;
 
-				// Only use addEventListener if the special events handler returns false
+				// Only use addEventListener if the special Events handler returns false
 				if ( !special.setup ||
 					special.setup.call( elem, data, namespaces, eventHandle ) === false ) {
 
@@ -11581,13 +11581,13 @@ jQuery.event = {
 				handlers.push( handleObj );
 			}
 
-			// Keep track of which events have ever been used, for event optimization
+			// Keep track of which Events have ever been used, for event optimization
 			jQuery.event.global[ type ] = true;
 		}
 
 	},
 
-	// Detach an event or set of events from an element
+	// Detach an event or set of Events from an element
 	remove: function( elem, types, handler, selector, mappedTypes ) {
 
 		var j, origCount, tmp,
@@ -11607,7 +11607,7 @@ jQuery.event = {
 			type = origType = tmp[ 1 ];
 			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
 
-			// Unbind all events (on this namespace, if provided) for the element
+			// Unbind all Events (on this namespace, if provided) for the element
 			if ( !type ) {
 				for ( type in events ) {
 					jQuery.event.remove( elem, type + types[ t ], handler, selector, true );
@@ -11621,7 +11621,7 @@ jQuery.event = {
 			tmp = tmp[ 2 ] &&
 				new RegExp( "(^|\\.)" + namespaces.join( "\\.(?:.*\\.|)" ) + "(\\.|$)" );
 
-			// Remove matching events
+			// Remove matching Events
 			origCount = j = handlers.length;
 			while ( j-- ) {
 				handleObj = handlers[ j ];
@@ -11657,7 +11657,7 @@ jQuery.event = {
 
 		// Remove data and the expando if it's no longer used
 		if ( jQuery.isEmptyObject( events ) ) {
-			dataPriv.remove( elem, "handle events" );
+			dataPriv.remove( elem, "handle Events" );
 		}
 	},
 
@@ -11821,7 +11821,7 @@ jQuery.event = {
 	special: {
 		load: {
 
-			// Prevent triggered image.load events from bubbling to window.load
+			// Prevent triggered image.load Events from bubbling to window.load
 			noBubble: true
 		},
 		click: {
@@ -11886,8 +11886,8 @@ jQuery.event = {
 };
 
 // Ensure the presence of an event listener that handles manually-triggered
-// synthetic events by interrupting progress until reinvoked in response to
-// *native* events that it fires directly, ensuring that state changes have
+// synthetic Events by interrupting progress until reinvoked in response to
+// *native* Events that it fires directly, ensuring that state changes have
 // already occurred before other listeners are invoked.
 function leverageNative( el, type, expectSync ) {
 
@@ -12105,7 +12105,7 @@ jQuery.each( {
 	which: function( event ) {
 		var button = event.button;
 
-		// Add which for key events
+		// Add which for key Events
 		if ( event.which == null && rkeyEvent.test( event.type ) ) {
 			return event.charCode != null ? event.charCode : event.keyCode;
 		}
@@ -12158,7 +12158,7 @@ jQuery.each( { focus: "focusin", blur: "focusout" }, function( type, delegateTyp
 	};
 } );
 
-// Create mouseenter/leave events using mouseover/out and event-time checks
+// Create mouseenter/leave Events using mouseover/out and event-time checks
 // so that event delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
@@ -12292,7 +12292,7 @@ function cloneCopyEvent( src, dest ) {
 		return;
 	}
 
-	// 1. Copy private data: events, handlers, etc.
+	// 1. Copy private data: Events, handlers, etc.
 	if ( dataPriv.hasData( src ) ) {
 		pdataOld = dataPriv.access( src );
 		pdataCur = dataPriv.set( dest, pdataOld );
@@ -12469,7 +12469,7 @@ jQuery.extend( {
 			}
 		}
 
-		// Copy the events from the original to the clone
+		// Copy the Events from the original to the clone
 		if ( dataAndEvents ) {
 			if ( deepDataAndEvents ) {
 				srcElements = srcElements || getAll( elem );
@@ -14861,7 +14861,7 @@ jQuery.extend( jQuery.event, {
 
 		cur = lastElement = tmp = elem = elem || document;
 
-		// Don't do events on text and comment nodes
+		// Don't do Events on text and comment nodes
 		if ( elem.nodeType === 3 || elem.nodeType === 8 ) {
 			return;
 		}
@@ -14903,13 +14903,13 @@ jQuery.extend( jQuery.event, {
 			[ event ] :
 			jQuery.makeArray( data, [ event ] );
 
-		// Allow special events to draw outside the lines
+		// Allow special Events to draw outside the lines
 		special = jQuery.event.special[ type ] || {};
 		if ( !onlyHandlers && special.trigger && special.trigger.apply( elem, data ) === false ) {
 			return;
 		}
 
-		// Determine event propagation path in advance, per W3C events spec (#9951)
+		// Determine event propagation path in advance, per W3C Events spec (#9951)
 		// Bubble up to document, then to window; watch for a global ownerDocument var (#9724)
 		if ( !onlyHandlers && !special.noBubble && !isWindow( elem ) ) {
 
@@ -14998,7 +14998,7 @@ jQuery.extend( jQuery.event, {
 	},
 
 	// Piggyback on a donor event to simulate a different one
-	// Used only for `focus(in | out)` events
+	// Used only for `focus(in | out)` Events
 	simulate: function( type, elem, event ) {
 		var e = jQuery.extend(
 			new jQuery.Event(),
@@ -15031,11 +15031,11 @@ jQuery.fn.extend( {
 
 
 // Support: Firefox <=44
-// Firefox doesn't have focus(in | out) events
+// Firefox doesn't have focus(in | out) Events
 // Related ticket - https://bugzilla.mozilla.org/show_bug.cgi?id=687787
 //
 // Support: Chrome <=48 - 49, Safari <=9.0 - 9.1
-// focus(in | out) events fire after focus & blur events,
+// focus(in | out) Events fire after focus & blur Events,
 // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
 // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 if ( !support.focusin ) {
@@ -15621,7 +15621,7 @@ jQuery.extend( {
 			// Request state (becomes false upon send and true upon completion)
 			completed,
 
-			// To know if global events are to be dispatched
+			// To know if global Events are to be dispatched
 			fireGlobals,
 
 			// Loop variable
@@ -15636,7 +15636,7 @@ jQuery.extend( {
 			// Callbacks context
 			callbackContext = s.context || s,
 
-			// Context for global events is callbackContext if it is a DOM node or jQuery collection
+			// Context for global Events is callbackContext if it is a DOM node or jQuery collection
 			globalEventContext = s.context &&
 				( callbackContext.nodeType || callbackContext.jquery ) ?
 					jQuery( callbackContext ) :
@@ -15781,8 +15781,8 @@ jQuery.extend( {
 			return jqXHR;
 		}
 
-		// We can fire global events as of now if asked to
-		// Don't fire events if jQuery.event is undefined in an AMD-usage scenario (#15118)
+		// We can fire global Events as of now if asked to
+		// Don't fire Events if jQuery.event is undefined in an AMD-usage scenario (#15118)
 		fireGlobals = jQuery.event && s.global;
 
 		// Watch for a new set of requests
@@ -16272,7 +16272,7 @@ jQuery.ajaxTransport( function( options ) {
 					};
 				};
 
-				// Listen to events
+				// Listen to Events
 				xhr.onload = callback();
 				errorCallback = xhr.onerror = xhr.ontimeout = callback( "error" );
 
@@ -16620,7 +16620,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 
 
-// Attach a bunch of functions for handling common AJAX events
+// Attach a bunch of functions for handling common AJAX Events
 jQuery.each( [
 	"ajaxStart",
 	"ajaxStop",
@@ -22795,7 +22795,7 @@ return jQuery;
           return eq(+object, +other);
 
         case errorTag:
-          return object.name == other.name && object.message == other.message;
+          return object.name == other.name && object.Message == other.Message;
 
         case regexpTag:
         case stringTag:
@@ -28676,7 +28676,7 @@ return jQuery;
       }
       var tag = baseGetTag(value);
       return tag == errorTag || tag == domExcTag ||
-        (typeof value.message == 'string' && typeof value.name == 'string' && !isPlainObject(value));
+        (typeof value.Message == 'string' && typeof value.name == 'string' && !isPlainObject(value));
     }
 
     /**
@@ -35264,7 +35264,7 @@ function setupEventListeners(reference, options, state, updateBound) {
 }
 
 /**
- * It will add resize/scroll events and start recalculating
+ * It will add resize/scroll Events and start recalculating
  * position of the popper element when they are triggered.
  * @method
  * @memberof Popper
@@ -35299,7 +35299,7 @@ function removeEventListeners(reference, state) {
 }
 
 /**
- * It will remove resize/scroll events and won't recalculate popper position
+ * It will remove resize/scroll Events and won't recalculate popper position
  * when they are triggered. It also won't trigger `onUpdate` callback anymore,
  * unless you call `update` method manually.
  * @method
@@ -36609,7 +36609,7 @@ var Defaults = {
   positionFixed: false,
 
   /**
-   * Whether events (resize, scroll) are initially enabled.
+   * Whether Events (resize, scroll) are initially enabled.
    * @prop {Boolean} eventsEnabled=true
    */
   eventsEnabled: true,
@@ -37134,7 +37134,7 @@ process.umask = function() { return 0; };
         };
 
         if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
+            global.addEventListener("MessageEvent.php", onGlobalMessage, false);
         } else {
             global.attachEvent("onmessage", onGlobalMessage);
         }
@@ -38318,7 +38318,7 @@ var methodsToPatch = [
 ];
 
 /**
- * Intercept mutating methods and emit events
+ * Intercept mutating methods and emit Events
  */
 methodsToPatch.forEach(function (method) {
   // cache original method
@@ -39372,7 +39372,7 @@ function flushCallbacks () {
 // So we now use microtasks everywhere, again.
 // A major drawback of this tradeoff is that there are some scenarios
 // where microtasks have too high a priority and fire in between supposedly
-// sequential events (e.g. #4521, #6690, which have workarounds)
+// sequential Events (e.g. #4521, #6690, which have workarounds)
 // or even between bubbling of the same event (#6566).
 var timerFunc;
 
@@ -40672,7 +40672,7 @@ function createComponent (
   // component constructor creation
   resolveConstructorOptions(Ctor);
 
-  // transform component v-model data into props & events
+  // transform component v-model data into props & Events
   if (isDef(data.model)) {
     transformModel(Ctor.options, data);
   }
@@ -41210,7 +41210,7 @@ function getFirstComponentChild (children) {
 function initEvents (vm) {
   vm._events = Object.create(null);
   vm._hasHookEvent = false;
-  // init parent attached events
+  // init parent attached Events
   var listeners = vm.$options._parentListeners;
   if (listeners) {
     updateComponentListeners(vm, listeners);
@@ -41284,7 +41284,7 @@ function eventsMixin (Vue) {
       vm._events = Object.create(null);
       return vm
     }
-    // array of events
+    // array of Events
     if (Array.isArray(event)) {
       for (var i$1 = 0, l = event.length; i$1 < l; i$1++) {
         vm.$off(event[i$1], fn);
@@ -41322,7 +41322,7 @@ function eventsMixin (Vue) {
           "Event \"" + lowerCaseEvent + "\" is emitted in component " +
           (formatComponentName(vm)) + " but the handler is registered for \"" + event + "\". " +
           "Note that HTML attributes are case-insensitive and you cannot use " +
-          "v-on to listen to camelCase events when using in-DOM templates. " +
+          "v-on to listen to camelCase Events when using in-DOM templates. " +
           "You should probably use \"" + (hyphenate(event)) + "\" instead of \"" + event + "\"."
         );
       }
@@ -42911,7 +42911,7 @@ var mustUseProp = function (tag, type, attr) {
 
 var isEnumeratedAttr = makeMap('contenteditable,draggable,spellcheck');
 
-var isValidContentEditableValue = makeMap('events,caret,typing,plaintext-only');
+var isValidContentEditableValue = makeMap('Events,caret,typing,plaintext-only');
 
 var convertEnumeratedValue = function (key, value) {
   return isFalsyAttrValue(value) || value === 'false'
@@ -46141,7 +46141,7 @@ function extractTransitionData (comp) {
   for (var key in options.propsData) {
     data[key] = comp[key];
   }
-  // events.
+  // Events.
   // extract listeners and pass them directly to the transition methods
   var listeners = options._parentListeners;
   for (var key$1 in listeners) {
@@ -48311,7 +48311,7 @@ function genKeyFilter (keys) {
   return (
     // make sure the key filters only apply to KeyboardEvents
     // #9441: can't use 'keyCode' in $event because Chrome autofill fires fake
-    // key events that do not have keyCode property...
+    // key Events that do not have keyCode property...
     "if(!$event.type.indexOf('key')&&" +
     (keys.map(genFilterCode).join('&&')) + ")return null;"
   )
@@ -49011,7 +49011,7 @@ function checkExpression (exp, text, warn, range) {
       );
     } else {
       warn(
-        "invalid expression: " + (e.message) + " in\n\n" +
+        "invalid expression: " + (e.Message) + " in\n\n" +
         "    " + exp + "\n\n" +
         "  Raw expression: " + (text.trim()) + "\n",
         range
@@ -49025,7 +49025,7 @@ function checkFunctionParameterExpression (exp, text, warn, range) {
     new Function(exp, '');
   } catch (e) {
     warn(
-      "invalid function parameter expression: " + (e.message) + " in\n\n" +
+      "invalid function parameter expression: " + (e.Message) + " in\n\n" +
       "    " + exp + "\n\n" +
       "  Raw expression: " + (text.trim()) + "\n",
       range
@@ -49560,7 +49560,7 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
+ * for Events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
 // import Echo from 'laravel-echo';

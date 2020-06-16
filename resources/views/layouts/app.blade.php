@@ -225,12 +225,27 @@
 
 <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hybrid-crypto-js@0.2.2/web/hybrid-crypto.min.js"></script>
 
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
 
+    var crypt = new Crypt();
+    var rsa = new RSA();
+
     $(document).ready(function() {
+
+        // Generate RSA key pair, default key size is 4096 bit
+        rsa.generateKeyPair(function(keyPair) {
+            // Callback function receives new key pair as a first argument
+            var publicKey = keyPair.publicKey;
+            var privateKey = keyPair.privateKey;
+            localStorage.removeItem("private_key");
+            localStorage.removeItem("public_key");
+            localStorage.setItem("private_key", privateKey);
+            localStorage.setItem("public_key", publicKey);
+        });
 
         $.ajaxSetup({
             headers: {

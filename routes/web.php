@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/messages/{id}', 'HomeController@messages')->name('messages');
-Route::post('/message', 'HomeController@sendMessage');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/messages/{id}', 'HomeController@messages')->name('messages');
+    Route::post('/message', 'HomeController@sendMessage');
+    Route::group(['prefix' => 'keys'], function () {
+        Route::get('/store', 'KeyController@store')->name('keys.store');
+    });
+});
+

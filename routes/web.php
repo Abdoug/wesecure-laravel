@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'checkSingleSession']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/messages/{id}', 'HomeController@messages')->name('messages');
     Route::post('/message', 'HomeController@sendMessage');

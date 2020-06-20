@@ -35,3 +35,45 @@
     </div>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+    @parent()
+        let generateAndStoreKeys = () => {
+            // Generate RSA key pair, default key size is 4096 bit
+            rsa.generateKeyPair(function(keyPair) {
+                // Callback function receives new key pair as a first argument
+                var publicKey = keyPair.publicKey;
+                var privateKey = keyPair.privateKey;
+                localStorage.removeItem("private_key_" + my_id);
+                localStorage.removeItem("public_key_" + my_id);
+                localStorage.setItem("private_key_" + my_id, privateKey);
+                localStorage.setItem("public_key_" + my_id, publicKey);
+                $.ajax({
+                    type: 'post',
+                    url: "{{route('keys.store')}}",
+                    data: {
+                        "public_key": publicKey
+                    },
+                    cache: false,
+                    success: (data) => {
+                        if (data.status === 200 && data.public_key_server) {
+                            let public_key_server = data.public_key_server;
+                            localStorage.removeItem("public_key_server");
+                            localStorage.setItem("public_key_server", public_key_server);
+                        }
+                        console.log("hey: ", data)
+                    },
+                    error: () => {
+
+                    },
+                    complete: () => {
+                    }
+                });
+            });
+        };
+    $(document).ready(() => {
+        generateAndStoreKeys();
+    });
+</script>
+@endsection

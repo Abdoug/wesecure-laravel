@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Config;
+use phpseclib\Crypt\RSA;
 
 class ConfigSeeder extends Seeder
 {
@@ -12,71 +13,12 @@ class ConfigSeeder extends Seeder
      */
     public function run()
     {
-        $private_key = "-----BEGIN RSA PRIVATE KEY-----
-MIIJKAIBAAKCAgEAyr47eaeEFbWy8z4Qh8PN6ecLoRTATxiMYWKtQH8/Z1xijqCo
-k45InQS72qaFClce/+HguDfswXaiI46ZMmWR66l7PuJbz+10l7RyygiwZaUXTfZ7
-8Hg7We4G1QUVTt+atjLm806kxXDDhvvjeLutyJWdb9jxFDsDtvkvtoZyOUnhqAXg
-n1+yQ5ULzeglP7PBo/jME1Z1bWBhiuq/4OAt2v8P3Tone8xOTNlC+os76kV6XnDj
-mwLdGyhTNR5v5dNQZDRFxQdE5p/SiygBgTudOE3DV+Y0XlFgWsfwJoMfq2PYJhVY
-G34ePUvh+An0i5T3J/vAFvB4BnqJZRdgPr3LFSX/ZZi+Esd73Y7g2UzOEElM+cZj
-AXWnuEQAg9Hm1aetd9cqLZBJ9pRoyYXfEJQLDBQk6t3MEmcEhHUP//cpsBZPH9pB
-GBlLlhrVyKz6W5JvWHzH54zRn2SpMQANBbFUe6i2vEnZuVXOkjDTNz2keghBOuLY
-N0GhrQFIgZlKfAg/IEXXKc2JT29e4FH3DA89E3sPaU82jCo2pgvgBcyjXYnUGFh/
-RwvKJ1iZnvXXMuHGN5+EdsYFYE4SLgFebPBbABbMzb3g9IvsN9Q5yK2OQIxmdBbn
-XFHxmwOyizw7nHH7poGHRQYJw7O2SH2cwWIOV+HVMAfHUHq0WpJuVrpp2fkCAwEA
-AQKCAgByCC8xjJvJDip5j5YClonxnkc3MZG8qyUB/VtO5INH4nl4mTpXy/ZhgnEa
-WQCJQVkpOOWJF8NtSQmHEERwSRqavveX9f8H4xnp3c+WfO6iLQn/irxJE4bmXO+w
-zqwecbv18IlfngMlHfiLqo9Vr9Hd+PDVIOLvqwW620sP0Wzbdgea1rtxSITeaC18
-ga65tqQaUuyNj9p6S3RxivmjRNPl0gIdPwFIKzB7HtQCUV/As5VRGxOZczHjfXnX
-bagoTwNvaMs5N450XL4yEK1P/7S9H1fYz5zy07hrNvuG3cdpQb4oJWcqB3SAq3aM
-aSUHgSDGd12iSVxo4HD4z/4NK/jViwIrEQPoeK8yK3U2SxLKJIp7JSi1Kq48cKZ8
-Q1aoVnUWDSgY2W9OqIO57QvWzSEOg9LMrUNNjhDJApzCgJv852Zh0RQJQVwJIxja
-DB5Gx49dTSmgYCbyE00DQPjNAUetylgaRpaTwmmVokd7ZPU8TAAfKoAWCHALt1+9
-66NV7RYcP1eeX3sMaZnwwnyPXY8LcreCYl+X/VqLGRXO9hQIFv5dD84llA7JqdwH
-0Ij9Wjt3hAMAULem/St4qMvr4nBnoMHtPUyIzezHmiC2lagMGR11Bn2yHTQaeF5k
-ObHCYTtP7wWeAHJZTCO2QacfprzXW4v3ZrTBlB6mixy7hrT8AQKCAQEA5V6zCrsn
-MFHgfukspvvfaS2c4d8+c8xlIvI7s2mhHzqW2/u4tCmFCANFn+vb5v+e+SbkFg35
-TQQ7knm4k30DhbRUlwT0GeZv4/zGmrnriPm6xW6P3YySFxNDQuTg98Mv0g5URR1e
-V5a8l58ssq+e5RGzwPpcEE9N1My/DLE/ZOABQL08G72qGVgoeSDLdK3Snz48TsoM
-VAnrDHzZh0YNZHevRmFX2w/r9Jyp1qJ3jmA7fpiB61OJjLmkIWMGJy6oav8USPNp
-G5dJoTuMrs4J+1zgxQH1qH2WUE3XJXZUiaWJK5tXr1yJYlw1GqHbWARl7DghCvnA
-ibQrJMsA7M6reQKCAQEA4kgiWq5XL3akQIKsbjKpnLeELRWJBUquH5kM8R/08ZYX
-6+T8NRyvhuS3ivxlI3GzbKudEBiHwPwMN7o9RJXSSZcHPlUwXvMRLUjUJOdclcoP
-uMmALPOLM1Nyep3FcFPjUqlm7+32Ez7FqR0OMyOvNy8zRh/w9GZLwnGgCW0o8G7i
-T3nwM3LuWCt3+IZYF0g7z7D/tQWiYaeT3XRo/fEr0QD1ShJI7q2J2AcHsF1v7eCi
-r/w9gEORbKmC+gdbKEpBEGCchbOhKNtKumspcUNA2BL1CyKlFZlwuiNP5IfRKW8h
-HkuRERXSSPupmstiuxr7CKsaCg9WI5Kb926arkKCgQKCAQEA3wAMKIG+3x6rmhfP
-vuWg1xxuq7ele2YcajaCTrOC397Rrzzz3c2ENj8gIRRp7xNVlzz1gm/BktxrosRO
-7K4dj4+8sjsxrEC7RjiLSwE5eyn5KVyN6MNzgZXLzizCgIA3bQ1bZvrfr16xKuSp
-y2wtmt50GkoO2hiQPjV2BbwKO2QCM9QHrZzf1NY+O03kISOiZApZDe0owUgHS1PT
-Fc7I1IX8VfvsM+It8Nuj0DaS8EylazaREZ9dWwFeDsu8vrmBKs2nBioJZbbX8jb4
-Vzegws8RBNkb4t1/F8ImS5jZJh5X15qnTKo2M/gb9TGqFM/p3BjSH16kj/0n+RSZ
-aKKiWQKCAQAXUdvIgKMXjyCKTW07xhjYv8jtZITEeNfNBdbhmquBojhA5U5got4s
-BrIrrqs1pegZ0O3U1NJYvyD7NURPJymOz/O9JsZfYqlog1LporZV8YcBQjLlbwvv
-dDAeFthcJSkOQcsL+vgbL6LrNMVb29eY1lJwbaZFaa1xEoitsARCEwtbqXNpufR6
-PbCVejLl41nWo6UWoMgFTGHetrqDQTGEzpZ41b2Sa2wDSWYvdNGuMDJT9KjZ6Ry5
-mBaZcdyhIFXoPCylUsfPEBp5b8XLmGS8X+fFCAL/YNrPNAhtwtl5bax6FMuUeS08
-vELUYxV/tt4cHJYIZ2A3NkrAizOBtfUBAoIBAFHRtwK3P0YIcUWhBOgCAQzvK8rQ
-AKyeoPE6qVY84bExIeZLhZqilubrpBy+F9mvmi9zU7waHTyjYkeg6KEZqit4fsnk
-n/2aDtuv5JeCvL+zpVVSnw95jEHIyaHodUsG3ZdpgW6+Ap4eDL02xFufzksBYQJP
-iwxXp0+x++11mmYnVKSG29B+pZ4n1d9maG+6Bjfek6Nnxuh+q279CeBcdo8JztEF
-uXRYCFP/YYuM3/1k8pMlt44PLX9m7gglaN4vfviPpXlCVgBm20bUoyVlkGdDbbLW
-niZFPstNPu4Akq58w3USOU9CcoMespTyaJv45u8xDV8YQBtkSlxgT1hUX1M=
------END RSA PRIVATE KEY-----";
-        $public_key = "-----BEGIN PUBLIC KEY-----
-MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAyr47eaeEFbWy8z4Qh8PN
-6ecLoRTATxiMYWKtQH8/Z1xijqCok45InQS72qaFClce/+HguDfswXaiI46ZMmWR
-66l7PuJbz+10l7RyygiwZaUXTfZ78Hg7We4G1QUVTt+atjLm806kxXDDhvvjeLut
-yJWdb9jxFDsDtvkvtoZyOUnhqAXgn1+yQ5ULzeglP7PBo/jME1Z1bWBhiuq/4OAt
-2v8P3Tone8xOTNlC+os76kV6XnDjmwLdGyhTNR5v5dNQZDRFxQdE5p/SiygBgTud
-OE3DV+Y0XlFgWsfwJoMfq2PYJhVYG34ePUvh+An0i5T3J/vAFvB4BnqJZRdgPr3L
-FSX/ZZi+Esd73Y7g2UzOEElM+cZjAXWnuEQAg9Hm1aetd9cqLZBJ9pRoyYXfEJQL
-DBQk6t3MEmcEhHUP//cpsBZPH9pBGBlLlhrVyKz6W5JvWHzH54zRn2SpMQANBbFU
-e6i2vEnZuVXOkjDTNz2keghBOuLYN0GhrQFIgZlKfAg/IEXXKc2JT29e4FH3DA89
-E3sPaU82jCo2pgvgBcyjXYnUGFh/RwvKJ1iZnvXXMuHGN5+EdsYFYE4SLgFebPBb
-ABbMzb3g9IvsN9Q5yK2OQIxmdBbnXFHxmwOyizw7nHH7poGHRQYJw7O2SH2cwWIO
-V+HVMAfHUHq0WpJuVrpp2fkCAwEAAQ==
------END PUBLIC KEY-----";
+        $rsa = new RSA();
+
+        $keys = $rsa->createKey(4096);
+        $private_key = $keys["privatekey"];
+        $public_key = $keys["publickey"];
+
         $privateKeyConfig = new Config();
         $privateKeyConfig->key = "private_key";
         $privateKeyConfig->value = $private_key;

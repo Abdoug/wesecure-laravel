@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/messages/{id}', 'HomeController@messages')->name('messages');
     Route::post('/message', 'HomeController@sendMessage');
     Route::group(['prefix' => 'keys'], function () {
-        Route::get('/store', 'KeyController@store')->name('keys.store');
+        Route::post('/store', 'KeyController@store')->name('keys.store');
     });
 });
 

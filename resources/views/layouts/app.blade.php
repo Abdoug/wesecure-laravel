@@ -236,25 +236,13 @@
 
     $(document).ready(function() {
 
-        // Generate RSA key pair, default key size is 4096 bit
-        rsa.generateKeyPair(function(keyPair) {
-            // Callback function receives new key pair as a first argument
-            var publicKey = keyPair.publicKey;
-            var privateKey = keyPair.privateKey;
-            localStorage.removeItem("private_key");
-            localStorage.removeItem("public_key");
-            localStorage.setItem("private_key", privateKey);
-            localStorage.setItem("public_key", publicKey);
-        });
-
+        // Enable pusher logging - don't include this in production
+        //Pusher.logToConsole = true;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $(`meta[name="csrf-token"]`).attr('content')
             }
         });
-
-        // Enable pusher logging - don't include this in production
-        //Pusher.logToConsole = true;
 
         var pusher = new Pusher('3f6a80d2b3906fac1080', {
             cluster: 'eu',
@@ -324,7 +312,7 @@
                     complete: () => {
                         scroller();
                     }
-                })
+                });
 
             }
 
@@ -337,5 +325,7 @@
         }
     });
 </script>
+
+@yield('scripts')
 
 </html>

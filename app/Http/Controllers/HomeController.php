@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Config;
+use App\Key;
 use App\Message;
 use App\User;
 use Illuminate\Http\Request;
@@ -9,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
 use App\Events\MyEvent;
+use phpseclib\Crypt\RSA;
 
 class HomeController extends Controller
 {
@@ -58,9 +61,22 @@ class HomeController extends Controller
     public function sendMessage(Request $request)
     {
         $from = Auth::id();
+        $user = User::find($from);
         $to = $request->receiver_id;
         $message = $request->message;
         $is_read = 0;
+
+        $encrypted = json_decode($request->encrypted);
+        $public_key_client = $user->key->public_key;
+        $private_server = Config::where('key', 'private_key')->first()->value;
+        $key = array_values(get_object_vars($encrypted->keys))[0];
+        $iv = $encrypted->iv;
+        $cipher = $encrypted->cipher;
+        dd(openssl_decrypt($cipher, 'AES-128-CBC', $key, OPENSSL_ZERO_PADDING, $iv));
+        $rsa = new RSA();
+        $rsa->loadKey($private_server);
+        $output = $rsa->decrypt($encrypted->cipher);
+        dd($output);
 
         $new_message = new Message();
         $new_message->from = $from;

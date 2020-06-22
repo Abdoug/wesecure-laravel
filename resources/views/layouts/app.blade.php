@@ -230,12 +230,11 @@
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
-
     var crypt = new Crypt();
-    var rsa = new RSA();
-
+    var rsa = new RSA({
+        keySize: 4096
+    });
     $(document).ready(function() {
-
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
         $.ajaxSetup({
@@ -243,12 +242,10 @@
                 'X-CSRF-TOKEN': $(`meta[name="csrf-token"]`).attr('content')
             }
         });
-
         var pusher = new Pusher('3f6a80d2b3906fac1080', {
             cluster: 'eu',
             forceTLS: true
         });
-
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
             data = data.message;
@@ -258,19 +255,15 @@
                 if (receiver_id == data.from) {
                     $('#' + data.from).click();
                 } else {
-
                     var pending = parseInt($('#' + data.from).find('.pending').html());
-
                     if (pending) {
                         $('#' + data.from).find('.pending').html(pending + 1);
                     } else {
                         $('#' + data.from).append("<span class='pending'>1</span>");
                     }
-
                 }
             }
         });
-
         $('.user').on('click', function() {
             $('.user').removeClass('active');
             $(this).addClass('active');
@@ -287,45 +280,37 @@
                 }
             })
         });
-
         $(document).on('keyup', '.input-text input', function(e) {
-
             var message = $(this).val();
-
             if (e.keyCode == 13 && message !== '' && receiver_id != '') {
-
+                let public_key_server = localStorage.getItem('public_key_server');
+                let private_key = localStorage.getItem('private_key_' + my_id);
+                let signature = crypt.signature(private_key, message);
+                let encrypted = crypt.encrypt(public_key_server, message, signature);
                 $(this).val('');
-
-                const data = 'receiver_id=' + receiver_id + '&message=' + message;
-
+                const data = 'receiver_id=' + receiver_id + '&message=' + message + '&encrypted=' + encrypted;
                 $.ajax({
                     type: 'post',
                     url: 'message',
                     data: data,
                     cache: false,
                     success: (data) => {
-
                     },
                     error: () => {
-
                     },
                     complete: () => {
                         scroller();
                     }
                 });
-
             }
-
         });
-
         function scroller() {
-            $('.message-wrapper').animate({
-                scrollTop: $('.message-wrapper').get(0).scrollHeight
+            let selector = $('.message-wrapper');
+            selector.animate({
+                scrollTop: selector.get(0).scrollHeight
             }, 50);
         }
     });
 </script>
-
 @yield('scripts')
-
 </html>

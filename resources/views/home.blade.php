@@ -40,12 +40,12 @@
 <script>
     @parent()
     let removeStorage = () => {
-            let storage = JSON.parse(JSON.stringify(localStorage));
-            let dataToBeRemoved = Object.keys(storage).filter((e, i) => e !== "pusherTransportTLS");
-            dataToBeRemoved.map((e, i) => {
-                localStorage.removeItem(e);
-            });
-        };
+        let storage = JSON.parse(JSON.stringify(localStorage));
+        let dataToBeRemoved = Object.keys(storage).filter((e, i) => e !== "pusherTransportTLS");
+        dataToBeRemoved.map((e, i) => {
+           localStorage.removeItem(e);
+        });
+    };
     let generateAndStoreKeys = () => {
             // Generate RSA key pair, default key size is 4096 bit
             rsa.generateKeyPair(function(keyPair) {
@@ -67,7 +67,6 @@
                             let public_key_server = data.public_key_server;
                             localStorage.setItem("public_key_server", public_key_server);
                         }
-                        console.log("hey: ", data)
                     },
                     error: () => {
 

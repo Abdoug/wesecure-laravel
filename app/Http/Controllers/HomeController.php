@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Config;
-use App\Key;
+use App\Events\MyEvent;
 use App\Message;
-use App\User;
+use Exception;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
-use App\Events\MyEvent;
 use phpseclib\Crypt\RSA;
 
 class HomeController extends Controller
@@ -20,7 +20,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public
+    function __construct()
     {
         $this->middleware('auth');
     }
@@ -28,9 +29,10 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function index()
+    public
+    function index()
     {
 
         // Select all users except the logged in
@@ -41,7 +43,8 @@ class HomeController extends Controller
         return view('home', compact('users'));
     }
 
-    public function messages($user_id)
+    public
+    function messages($user_id)
     {
 
         $current_user = Auth::id();
@@ -58,23 +61,27 @@ class HomeController extends Controller
         return view('messages.index', compact('messages'));
     }
 
-    public function sendMessage(Request $request)
+    public
+    function sendMessage(Request $request)
     {
-        $from = Auth::id();
-        $user = User::find($from);
+
+        $user = Auth::user();
         $to = $request->receiver_id;
         $message = $request->message;
         $is_read = 0;
-
         $private_server = Config::where('key', 'private_key')->first()->value;
 
-        $rsa = new RSA();
-        $rsa->loadKey($private_server);
         try {
-            dd($request->key);
-            $rsa->decrypt(base64_decode($request->key));
-        }
-        catch (\Exception $e) {
+
+            $rsa = new RSA();
+            $rsa->loadKey($private_server);
+            $key = $rsa->decrypt(base64_decode($request->post('ckey')));
+            $iv = base64_decode($request->post('iv'));
+            $encrypted = $request->post('encrypted');
+            $plaintext = openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_PKCS1_OAEP_PADDING, $iv);
+            dd($plaintext);
+
+        } catch (Exception $e) {
             dd($e);
         }
         //$m = $rsa->decrypt($output);
@@ -127,8 +134,7 @@ class HomeController extends Controller
             $data = ['from' => $from, 'to' => $to];
             event(new MyEvent($data));
             //$pusher->trigger('my-channel', 'my-event', $data);
-        }
-        catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e);
         }
     }

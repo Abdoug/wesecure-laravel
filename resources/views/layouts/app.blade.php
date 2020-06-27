@@ -166,35 +166,36 @@
 </head>
 
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm navbar-app">
-            <div class="container mr-0 container-app">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div id="app">
+    <nav class="navbar navbar-expand-md shadow-sm navbar-app">
+        <div class="container mr-0 container-app">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav mr-auto">
 
-                    </ul>
+                </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto link-app">
-                        <!-- Authentication Links -->
-                        @guest
+                <!-- Right Side Of Navbar -->
+                <ul class="navbar-nav ml-auto link-app">
+                    <!-- Authentication Links -->
+                    @guest
                         <li class="nav-item pl-4">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
-                        <li class="nav-item pl-4">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
+                            <li class="nav-item pl-4">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
                         @endif
-                        @else
+                    @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -211,36 +212,30 @@
                                 </form>
                             </div>
                         </li>
-                        @endguest
-                    </ul>
-                </div>
+                    @endguest
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <main class="py-4">
+        @yield('content')
+    </main>
+</div>
 </body>
 
 <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/hybrid-crypto-js@0.2.2/web/hybrid-crypto.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptico/0.0.1343522940/cryptico.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/hybrid-crypto-js@0.2.2/web/hybrid-crypto.min.js"></script>--}}
+<script src="{{asset('js/hybrid-crypto.min.js')}}"></script>
 
 <script>
     var receiver_id = '';
     var my_id = "{{ Auth::id() }}";
     var crypt = new Crypt();
     var rsa = new RSA({
-        keySize: 4096
+        keySize: 4096,
+        rsaStandard: 'RSAES-PKCS1-V1_5', // RSA-OAEP or RSAES-PKCS1-V1_5,
     });
     let dec2hex = (dec) => {
         return ('0' + dec.toString(16)).substr(-2);
@@ -250,7 +245,7 @@
         window.crypto.getRandomValues(arr);
         return Array.from(arr, dec2hex).join('');
     };
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
         let public_key_server = localStorage.getItem('public_key_server');
@@ -265,7 +260,7 @@
             forceTLS: true
         });
         var channel = pusher.subscribe('my-channel');
-        channel.bind('my-event', function(data) {
+        channel.bind('my-event', function (data) {
             data = data.message;
             if (my_id == data.from) {
                 $('#' + data.to).click();
@@ -282,7 +277,7 @@
                 }
             }
         });
-        $('.user').on('click', function() {
+        $('.user').on('click', function () {
             $('.user').removeClass('active');
             $(this).addClass('active');
             $(this).find('.pending').remove();
@@ -292,13 +287,13 @@
                 url: 'messages/' + receiver_id,
                 data: '',
                 cache: false,
-                success: function(data) {
+                success: function (data) {
                     $('#messages').html(data);
                     scroller();
                 }
             })
         });
-        $(document).on('keyup', '.input-text input', function(e) {
+        $(document).on('keyup', '.input-text input', function (e) {
             var message = $(this).val();
             if (e.keyCode == 13 && message !== '' && receiver_id != '') {
 
@@ -310,17 +305,9 @@
                 //$iv = openssl_random_pseudo_bytes($ivlen);
                 //$ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv, $tag);
 
-                let passPhrase = generateKey(32);
-                var el = CryptoJS.AES.encrypt(message, passPhrase);
-
-                //let pass = ("89cb99c2f81c44486ff14c433f8e3705");
-                //let cipher = "a012874a4bade201e93cc024a129b94a";
-
-                let CMSG = el.toString();
-                console.log(typeof CMSG)
                 // var enc = CryptoJS.AES.decrypt(windowbuffer, passPhrase);
 
-                
+
                 // var encrypt = new JSEncrypt();
                 // encrypt.setPublicKey(public_key_server);
                 // var encryptedKey = encrypt.encrypt("hello there!");
@@ -329,15 +316,29 @@
 
                 //var ee = cryptico.encrypt(message, el);
 
-                console.log("LOL: ", enc);
-                //let signature = crypt.signature(private_key, message);
-                //let encrypted = crypt.encrypt(public_key_server, message, signature);
+
+                let sign = crypt.signature(private_key, message);
+                const {signature} = JSON.parse(sign);
+                // console.log(signature)
+                let encrypted = crypt.encrypt(public_key_server, message, signature);
+                encrypted = JSON.parse(encrypted);
+                // console.log(typeof encrypted.iv)
+                console.log(encrypted.iv)
                 $(this).val('');
-                const data = 'receiver_id=' + receiver_id + '&message=' + message + '&encrypted=' + el.ciphertext.toString() + '&key=' + ee.cipher + '&iv=' + el.iv.toString();
+                let formData = [
+                    'receiver_id=' + receiver_id,
+                    'message=' + message,
+                    'encrypted=' + encodeURIComponent(encrypted.cipher),
+                    'ckey=' + encodeURIComponent(encrypted.keys[Object.keys(encrypted.keys)[0]]),
+                    'iv=' + encodeURIComponent(encrypted.iv),
+                    'signature=' + encodeURIComponent(signature)
+                ];
+
+
                 $.ajax({
                     type: 'post',
                     url: 'message',
-                    data: data,
+                    data: formData.join('&'),
                     cache: false,
                     success: (data) => {
                     },
@@ -349,6 +350,7 @@
                 });
             }
         });
+
         function scroller() {
             let selector = $('.message-wrapper');
             selector.animate({

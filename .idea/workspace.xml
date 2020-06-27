@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ee69ff5-f343-4f42-b06a-29cb9588f2e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-plugin.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/hybrid-crypto.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/laravel_chat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel_chat.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="9ee69ff5-f343-4f42-b06a-29cb9588f2e3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -188,8 +175,16 @@
       <workItem from="1593032564425" duration="2024000" />
       <workItem from="1593188196213" duration="10006000" />
       <workItem from="1593270805845" duration="3750000" />
-      <workItem from="1593282068854" duration="7176000" />
+      <workItem from="1593282068854" duration="7265000" />
     </task>
+    <task id="LOCAL-00001" summary="crash the app!">
+      <created>1593289334237</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1593289334238</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -231,13 +226,20 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="crash the app!" />
+    <option name="LAST_COMMIT_MESSAGE" value="crash the app!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-136" y="-947" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1593285245788">
       <screen x="-583" y="-1417" width="2560" height="1417" />
     </state>
     <state x="-136" y="-947" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1440.877/-583.-1417.2560.1417@-583.-1417.2560.1417" timestamp="1593285245788" />
+    <state x="-149" y="-1160" key="CommitChangelistDialog2" timestamp="1593289333276">
+      <screen x="-583" y="-1417" width="2560" height="1417" />
+    </state>
+    <state x="-149" y="-1160" key="CommitChangelistDialog2/0.23.1440.877/-583.-1417.2560.1417@-583.-1417.2560.1417" timestamp="1593289333276" />
     <state width="1419" height="243" key="GridCell.Tab.0.bottom" timestamp="1593282035700">
       <screen x="-583" y="-1417" width="2560" height="1417" />
     </state>

@@ -1,3 +1,6 @@
 {
-    "phpcs.executablePath": ""
+    "phpcs.executablePath": "",
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "off",
+    "debug.allowBreakpointsEverywhere": true
 }

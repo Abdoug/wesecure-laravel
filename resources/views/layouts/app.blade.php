@@ -226,6 +226,14 @@
 <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/hybrid-crypto-js@0.2.2/web/hybrid-crypto.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cryptico/0.0.1343522940/cryptico.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
 <script>
     var receiver_id = '';
@@ -234,9 +242,19 @@
     var rsa = new RSA({
         keySize: 4096
     });
+    let dec2hex = (dec) => {
+        return ('0' + dec.toString(16)).substr(-2);
+    };
+    let generateKey = (len) => {
+        var arr = new Uint8Array((len || 40) / 2);
+        window.crypto.getRandomValues(arr);
+        return Array.from(arr, dec2hex).join('');
+    };
     $(document).ready(function() {
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
+        let public_key_server = localStorage.getItem('public_key_server');
+        let private_key = localStorage.getItem('private_key_' + my_id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $(`meta[name="csrf-token"]`).attr('content')
@@ -283,12 +301,39 @@
         $(document).on('keyup', '.input-text input', function(e) {
             var message = $(this).val();
             if (e.keyCode == 13 && message !== '' && receiver_id != '') {
-                let public_key_server = localStorage.getItem('public_key_server');
-                let private_key = localStorage.getItem('private_key_' + my_id);
-                let signature = crypt.signature(private_key, message);
-                let encrypted = crypt.encrypt(public_key_server, message, signature);
+
+                {{--let ivlen = '{{openssl_cipher_iv_length("aes-128-cbc")}}';--}}
+                {{--let iv = '{{base64_encode(openssl_random_pseudo_bytes('16'))}}';--}}
+                {{--let test = '{{openssl_encrypt("<script>document.write(message)</script>", "aes-128-cbc", "sdfsdfsdf", $options=0, openssl_random_pseudo_bytes(16))}}';--}}
+                //console.log("OPENSSL: ", test);
+                //$ivlen = openssl_cipher_iv_length($cipher);
+                //$iv = openssl_random_pseudo_bytes($ivlen);
+                //$ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv, $tag);
+
+                let passPhrase = generateKey(32);
+                var el = CryptoJS.AES.encrypt(message, passPhrase);
+
+                //let pass = ("89cb99c2f81c44486ff14c433f8e3705");
+                //let cipher = "a012874a4bade201e93cc024a129b94a";
+
+                let CMSG = el.toString();
+                console.log(typeof CMSG)
+                // var enc = CryptoJS.AES.decrypt(windowbuffer, passPhrase);
+
+                
+                // var encrypt = new JSEncrypt();
+                // encrypt.setPublicKey(public_key_server);
+                // var encryptedKey = encrypt.encrypt("hello there!");
+                // encrypt.setPrivateKey(private_key);
+                // var decKey = encrypt.decrypt(encryptedKey);
+
+                //var ee = cryptico.encrypt(message, el);
+
+                console.log("LOL: ", enc);
+                //let signature = crypt.signature(private_key, message);
+                //let encrypted = crypt.encrypt(public_key_server, message, signature);
                 $(this).val('');
-                const data = 'receiver_id=' + receiver_id + '&message=' + message + '&encrypted=' + encrypted;
+                const data = 'receiver_id=' + receiver_id + '&message=' + message + '&encrypted=' + el.ciphertext.toString() + '&key=' + ee.cipher + '&iv=' + el.iv.toString();
                 $.ajax({
                     type: 'post',
                     url: 'message',

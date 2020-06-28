@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Config;
 use App\Events\MyEvent;
+use App\Key;
 use App\Message;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
@@ -31,8 +32,7 @@ class HomeController extends Controller
      *
      * @return Renderable
      */
-    public
-    function index()
+    public function index()
     {
 
         // Select all users except the logged in
@@ -43,8 +43,7 @@ class HomeController extends Controller
         return view('home', compact('users'));
     }
 
-    public
-    function messages($user_id)
+    public function messages($user_id)
     {
 
         $current_user = Auth::id();
@@ -61,80 +60,40 @@ class HomeController extends Controller
         return view('messages.index', compact('messages'));
     }
 
-    public
-    function sendMessage(Request $request)
+    public function sendMessage(Request $request)
     {
-
-        $user = Auth::user();
-        $to = $request->receiver_id;
-        $message = $request->message;
-        $is_read = 0;
-        $private_server = Config::where('key', 'private_key')->first()->value;
-
         try {
-
+            $user = Auth::user();
+            $from = $user->id;
+            $to = $request->receiver_id;
+            $is_read = 0;
+            $private_server = Config::where('key', 'private_key')->first()->value;
+            $public_key_client = $user->key->public_key;
             $rsa = new RSA();
             $rsa->loadKey($private_server);
             $key = $rsa->decrypt(base64_decode($request->post('ckey')));
             $iv = base64_decode($request->post('iv'));
             $encrypted = $request->post('encrypted');
-            $plaintext = openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_PKCS1_OAEP_PADDING, $iv);
-            dd($plaintext);
+            $message = openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_PKCS1_OAEP_PADDING, $iv);
+            $rsa = new RSA();
+            $rsa->setSignatureMode(RSA::SIGNATURE_PKCS1);
+            $rsa->setHash('sha256');
+            $rsa->loadKey($public_key_client);
+            $ok = $rsa->verify($message, base64_decode($request->post('signature')));
+            dd($ok);
+            //$ok = openssl_verify($message, base64_decode($request->post('signature')), $keyy, OPENSSL_ALGO_SHA256);
 
-        } catch (Exception $e) {
-            dd($e);
-        }
-        //$m = $rsa->decrypt($output);
-
-        //dd($request->encrypted, $request->key, hex2bin($request->iv));
-        //$ciphertext = openssl_decrypt($request->encrypted, 'AES-128-CBC', $request->key, OPENSSL_RAW_DATA, hex2bin($request->iv));
-        //dd($ciphertext);
-
-//        $encrypted = json_decode($request->encrypted);
-//        $private_server = Config::where('key', 'private_key')->first()->value;
-//        $key = array_values(get_object_vars($encrypted->keys))[0];
-//        $iv = $encrypted->iv;
-//
-//        $cipher = $encrypted->cipher;
-//        dd(openssl_decrypt($cipher, 'AES-256-CBC', $key, [OPENSSL_RAW_DATA, OPENSSL_NO_PADDING], $iv));
-//        $rsa = new RSA();
-//        $rsa->loadKey($private_server);
-//
-//        try {
-//            dd($key);
-//            $output = $rsa->decrypt(base64_decode($key));
-//            dd($output);
-//        }
-//        catch (\Exception $e) {
-//            dd($e);
-//        }
-        //dd($output);
-
-        $new_message = new Message();
-        $new_message->from = $from;
-        $new_message->to = $to;
-        $new_message->message = $message;
-        $new_message->is_read = $is_read;
-
-        $new_message->save();
-
-        $options = array(
-            'cluster' => 'eu',
-            'useTls' => true
-        );
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-
-        try {
+            //dd($ok);
+            $new_message = new Message();
+            $new_message->from = $from;
+            $new_message->to = $to;
+            $new_message->message = $message;
+            $new_message->is_read = $is_read;
+            $new_message->save();
             $data = ['from' => $from, 'to' => $to];
             event(new MyEvent($data));
-            //$pusher->trigger('my-channel', 'my-event', $data);
-        } catch (Exception $e) {
+        }
+        catch (\Exception $e) {
             dd($e);
         }
     }

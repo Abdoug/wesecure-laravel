@@ -295,46 +295,20 @@
         });
         $(document).on('keyup', '.input-text input', function (e) {
             var message = $(this).val();
-            if (e.keyCode == 13 && message !== '' && receiver_id != '') {
-
-                {{--let ivlen = '{{openssl_cipher_iv_length("aes-128-cbc")}}';--}}
-                {{--let iv = '{{base64_encode(openssl_random_pseudo_bytes('16'))}}';--}}
-                {{--let test = '{{openssl_encrypt("<script>document.write(message)</script>", "aes-128-cbc", "sdfsdfsdf", $options=0, openssl_random_pseudo_bytes(16))}}';--}}
-                //console.log("OPENSSL: ", test);
-                //$ivlen = openssl_cipher_iv_length($cipher);
-                //$iv = openssl_random_pseudo_bytes($ivlen);
-                //$ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv, $tag);
-
-                // var enc = CryptoJS.AES.decrypt(windowbuffer, passPhrase);
-
-
-                // var encrypt = new JSEncrypt();
-                // encrypt.setPublicKey(public_key_server);
-                // var encryptedKey = encrypt.encrypt("hello there!");
-                // encrypt.setPrivateKey(private_key);
-                // var decKey = encrypt.decrypt(encryptedKey);
-
-                //var ee = cryptico.encrypt(message, el);
-
-
+            if (e.keyCode === 13 && message !== '' && receiver_id !== '') {
                 let sign = crypt.signature(private_key, message);
                 const {signature} = JSON.parse(sign);
-                // console.log(signature)
                 let encrypted = crypt.encrypt(public_key_server, message, signature);
                 encrypted = JSON.parse(encrypted);
-                // console.log(typeof encrypted.iv)
-                console.log(encrypted.iv)
                 $(this).val('');
+                console.log("S: ", encrypted, " ", sign);
                 let formData = [
                     'receiver_id=' + receiver_id,
-                    'message=' + message,
                     'encrypted=' + encodeURIComponent(encrypted.cipher),
                     'ckey=' + encodeURIComponent(encrypted.keys[Object.keys(encrypted.keys)[0]]),
                     'iv=' + encodeURIComponent(encrypted.iv),
                     'signature=' + encodeURIComponent(signature)
                 ];
-
-
                 $.ajax({
                     type: 'post',
                     url: 'message',

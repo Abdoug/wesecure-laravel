@@ -237,6 +237,7 @@
         keySize: 4096,
         rsaStandard: 'RSAES-PKCS1-V1_5', // RSA-OAEP or RSAES-PKCS1-V1_5,
     });
+    let public_key_server, private_key;
     let dec2hex = (dec) => {
         return ('0' + dec.toString(16)).substr(-2);
     };
@@ -248,8 +249,6 @@
     $(document).ready(function () {
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
-        let public_key_server = localStorage.getItem('public_key_server');
-        let private_key = localStorage.getItem('private_key_' + my_id);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $(`meta[name="csrf-token"]`).attr('content')
@@ -301,7 +300,6 @@
                 let encrypted = crypt.encrypt(public_key_server, message, signature);
                 encrypted = JSON.parse(encrypted);
                 $(this).val('');
-                console.log("S: ", encrypted, " ", sign);
                 let formData = [
                     'receiver_id=' + receiver_id,
                     'encrypted=' + encodeURIComponent(encrypted.cipher),

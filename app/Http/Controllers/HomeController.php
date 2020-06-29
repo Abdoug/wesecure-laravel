@@ -75,15 +75,7 @@ class HomeController extends Controller
             $iv = base64_decode($request->post('iv'));
             $encrypted = $request->post('encrypted');
             $message = openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_PKCS1_OAEP_PADDING, $iv);
-            $rsa = new RSA();
-            $rsa->setSignatureMode(RSA::SIGNATURE_PKCS1);
-            $rsa->setHash('sha256');
-            $rsa->loadKey($public_key_client);
-            $ok = $rsa->verify($message, base64_decode($request->post('signature')));
-            dd($ok);
-            //$ok = openssl_verify($message, base64_decode($request->post('signature')), $keyy, OPENSSL_ALGO_SHA256);
-
-            //dd($ok);
+            openssl_verify($message, base64_decode($request->signature), $public_key_client, OPENSSL_ALGO_SHA256);
             $new_message = new Message();
             $new_message->from = $from;
             $new_message->to = $to;
@@ -94,7 +86,7 @@ class HomeController extends Controller
             event(new MyEvent($data));
         }
         catch (\Exception $e) {
-            dd($e);
+            //dd($e);
         }
     }
 }

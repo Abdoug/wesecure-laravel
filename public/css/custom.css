@@ -54,6 +54,8 @@ body {
     color: var(--background-color-1);
     outline: none;
     font-family: var(--font-family-1);
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .home-button:hover {

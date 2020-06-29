@@ -88,7 +88,7 @@
 
                 <div class="home-content d-flex">
                     <p>A secure chat app that lets you meet your family, friends.. with a more comfortable and trustzone, just by registering then yeah enjoy!</p>
-                    <button class="home-button">Start</button>
+                    <a href="/register" class="home-button">Start</a>
                 </div>
             </div>
         </div>

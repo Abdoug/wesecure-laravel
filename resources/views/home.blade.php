@@ -66,6 +66,7 @@
                         if (data.status === 200 && data.public_key_server) {
                             let public_key_server = data.public_key_server;
                             localStorage.setItem("public_key_server", public_key_server);
+                            setKeys();
                         }
                     },
                     error: () => {
@@ -76,6 +77,10 @@
                 });
             });
         };
+    let setKeys = () => {
+        public_key_server = localStorage.getItem('public_key_server');
+        private_key = localStorage.getItem('private_key_' + my_id);
+    };
     $(document).ready(() => {
         generateAndStoreKeys();
     });
